@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Babu Ne Khana Khaya? 🍱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app-root">
+    <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light theme">🌙</button>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="login-screen">
+      <div class="login-card">
+        <h1>Babu Ne Khana Khaya? 🍱</h1>
+        <p class="sub">New here? Sign up to create your own register. Already have one? Log in with your name and password.</p>
+        <div class="field">
+          <label for="reg-name">Register name</label>
+          <input id="reg-name" type="text" autocomplete="username" placeholder="e.g. Rahul's tiffin" />
+        </div>
+        <div class="field">
+          <label for="reg-pass">Password</label>
+          <input id="reg-pass" type="password" autocomplete="current-password" placeholder="Choose or enter your password" />
+        </div>
+        <div class="btn-row">
+          <button class="btn secondary" id="signup-btn">Sign up</button>
+          <button class="btn primary" id="login-btn">Log in</button>
+        </div>
+        <div class="error-text" id="login-error"></div>
+        <p class="note">Registers are stored locally in this browser (or in Claude's shared storage if opened as a published artifact). Anyone with the name + password combo can access the same register — light protection, not strong security.</p>
+      </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div class="app hidden" id="app">
+      <header class="app-header">
+        <div class="header-top">
+          <div>
+            <h1>Babu Ne Khana Khaya? 🍱</h1>
+            <p class="sub" id="register-label">Register: —</p>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn" id="account-btn" title="Account settings">⚙</button>
+            <button class="btn ghost" id="switch-btn">Log out</button>
+          </div>
+        </div>
+        <div class="price-row">
+          <label for="price-input">Price per tiffin</label>
+          <span>₹</span>
+          <input id="price-input" type="number" min="0" step="1" value="60" />
+        </div>
+      </header>
+
+      <!-- Account settings panel -->
+      <div class="panel hidden" id="account-panel">
+        <h2>Account settings</h2>
+        <div class="field">
+          <label for="acc-current-pass">Current password</label>
+          <input id="acc-current-pass" type="password" placeholder="Confirm your current password" />
+        </div>
+        <div class="field">
+          <label for="acc-new-pass">New password (leave blank to keep current)</label>
+          <input id="acc-new-pass" type="password" placeholder="New password" />
+        </div>
+        <div class="btn-row">
+          <button class="btn primary" id="save-pass-btn">Save changes</button>
+          <button class="btn danger" id="delete-account-btn">Delete register</button>
+        </div>
+        <div class="error-text" id="account-error"></div>
+        <div class="success-text" id="account-success"></div>
+
+        <hr class="panel-divider" />
+        <h2>Appearance</h2>
+        <div class="color-fields">
+          <div class="color-field">
+            <label for="color-day">Day accent</label>
+            <input type="color" id="color-day" value="#e7a93e" />
+          </div>
+          <div class="color-field">
+            <label for="color-night">Night accent</label>
+            <input type="color" id="color-night" value="#c0573e" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn secondary" id="reset-colors-btn">Reset to default</button>
+          <button class="btn primary" id="apply-colors-btn">Apply colors</button>
+        </div>
+      </div>
+
+      <nav class="month-nav">
+        <button class="icon-btn" id="prev-month" aria-label="Previous month">‹</button>
+        <div class="month-label" id="month-label">Loading…</div>
+        <button class="icon-btn" id="next-month" aria-label="Next month">›</button>
+      </nav>
+
+      <div class="legend">
+        <span><span class="swatch day"></span>Day</span>
+        <span><span class="swatch night"></span>Night</span>
+      </div>
+
+      <!-- Ledger list -->
+      <div class="list" id="tiffin-list">
+        <div class="empty-note">Loading…</div>
+      </div>
+
+      <div class="summary" id="summary">
+        <div class="stat"><div class="n" id="day-count">0</div><div class="l">Day tiffins</div></div>
+        <div class="stat"><div class="n" id="night-count">0</div><div class="l">Night tiffins</div></div>
+        <div class="stat"><div class="n" id="total-count">0</div><div class="l">Total tiffins</div></div>
+      </div>
+
+      <div class="total-bar">
+        <span class="label" id="month-caption">This month's bill</span>
+        <span class="amount" id="amount">₹0</span>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts">
+        <div class="chart-card">
+          <h3>Daily spend this month</h3>
+          <div class="chart-canvas-wrap"><canvas id="daily-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>Day vs Night split</h3>
+          <div class="chart-canvas-wrap"><canvas id="split-chart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
